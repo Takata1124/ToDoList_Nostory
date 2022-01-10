@@ -45,13 +45,14 @@ class HomeViewController: UIViewController {
     }
     
     private func setupBindings() {
-
+        
         bottomView.searchButton.button?.rx.tap
-            .subscribe { _ in
-                print("hello")
+            .asDriver()
+            .drive { [weak self] _ in
+                let detailViewController = DetailViewController()
+                detailViewController.modalPresentationStyle = .fullScreen
+                self?.present(detailViewController, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
-
-
     }
 }

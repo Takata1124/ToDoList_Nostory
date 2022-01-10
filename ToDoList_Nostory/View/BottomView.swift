@@ -11,9 +11,9 @@ import RxCocoa
 
 class BottomView: UIView {
     
-    let uiButton_1 = BottomButtonView(width: 70, imageName: "magnifyingglass")
-    let uiButton_2 = BottomButtonView(width: 70, imageName: "magnifyingglass")
-    let uiButton_3 = BottomButtonView(width: 70, imageName: "magnifyingglass")
+    let uiButton_1 = BottomButtonView(width: 70, title: "New")
+    let uiButton_2 = BottomButtonView(width: 70, imageName: "plus")
+    let uiButton_3 = BottomButtonView(width: 70, imageName: "bell")
     let searchButton = BottomButtonView(width: 70, imageName: "magnifyingglass")
     
     override init(frame: CGRect) {
@@ -50,23 +50,22 @@ class BottomView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
 }
 
 class BottomButtonView: UIView {
     
     var button: BottomButton?
     
-    init(width: CGFloat, imageName: String) {
+    init(width: CGFloat, imageName: String = "", title: String = "") {
         super.init(frame: .zero)
         
         button = BottomButton(type: .custom)
         button?.setImage(UIImage(systemName: imageName)?.resize(size: .init(width: width * 0.4, height: width * 0.4)), for: .normal)
+        button?.setTitle(title, for: .normal)
+        button?.setTitleColor(UIColor.black, for: .normal)
         button?.translatesAutoresizingMaskIntoConstraints = false
         button?.backgroundColor = .white
         button?.layer.cornerRadius = width / 2
-        
         button?.layer.shadowOffset = .init(width: 1.5, height: 2)
         button?.layer.shadowColor = UIColor.black.cgColor
         button?.layer.shadowOpacity = 0.3
@@ -91,7 +90,6 @@ class BottomButton: UIButton {
                     
                     self.transform = .init(scaleX: 0.8, y: 0.8)
                     self.layoutIfNeeded()
-//                    print("hey")
                 }
             } else {
                 
