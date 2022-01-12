@@ -11,10 +11,10 @@ import RxCocoa
 
 class BottomView: UIView {
     
-    let uiButton_1 = BottomButtonView(width: 70, title: "New")
-    let uiButton_2 = BottomButtonView(width: 70, imageName: "plus")
+    let plusButton = BottomButtonView(width: 70, imageName: "plus")
+    let uiButton_2 = BottomButtonView(width: 70, title: "New")
     let uiButton_3 = BottomButtonView(width: 70, imageName: "bell")
-    let searchButton = BottomButtonView(width: 70, imageName: "magnifyingglass")
+    let searchButton = BottomButtonView(width: 70, imageName: "gearshape")
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,9 +25,9 @@ class BottomView: UIView {
     
     private func setupLayout() {
         
-        backgroundColor = .rgb(red: 200, green: 200, blue: 200)
+        backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
         
-        let baseStackView = UIStackView(arrangedSubviews: [uiButton_1, uiButton_2, uiButton_3, searchButton])
+        let baseStackView = UIStackView(arrangedSubviews: [plusButton, uiButton_2, uiButton_3, searchButton])
         baseStackView.axis = .horizontal
         baseStackView.distribution = .fillEqually
         baseStackView.spacing = 10

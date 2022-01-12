@@ -9,79 +9,85 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-struct Product {
+//struct Product {
+//
+//    let imageName: String
+//    let title: String
+//}
+//
+//struct ProductViewModel {
+//
+////    var items = PublishSubject<[Product]>()
+//    var relay = BehaviorRelay<[Product]>(value: [])
+//
+//    func fetchItems() {
+//
+//        let products = [
+//            Product(imageName: "house", title: "Home"),
+//            Product(imageName: "gear", title: "Setting"),
+//            Product(imageName: "person.circle", title: "Profile")
+//        ]
+//
+//        relay.accept(products)
+//
+////        items.onNext(products)
+////        items.onCompleted()
+//    }
+//
+//}
+
+struct ListModel {
     
-    let imageName: String
-    let title: String
+    let initTweet: String
 }
 
-struct ProductViewModel {
+class ListViewModel {
     
-    var items = PublishSubject<[Product]>()
+    var titleArray = BehaviorRelay<[ListModel]>(value: [ListModel(initTweet: "hello")])
     
-    func fetchItems() {
-        
-        let products = [
-            Product(imageName: "house", title: "Home"),
-            Product(imageName: "gear", title: "Setting"),
-            Product(imageName: "person.circle", title: "Profile")
-        ]
-        items.onNext(products)
-        items.onCompleted()
+    init() {
+        //       relayItems = Observable<[TweetModel]>(value: tweetList)
+        titleArray.accept(titleArray.value + [ListModel(initTweet: "kind")])
     }
     
-    
+    func append(_ element: ListModel) {
+        titleArray.accept(titleArray.value + [element])
+        print(titleArray.value)
+    }
 }
 
 class MiddleView: UIView {
     
-    private let tableView: UITableView = {
+    let tableView: UITableView = {
         
         let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        //forCellReuseIdentifierは"cell"でないとエラー
+        table.register(TaskCell.self, forCellReuseIdentifier: "cell")
         return table
     }()
     
-    private var viewModel = ProductViewModel()
-    
-    private var bag = DisposeBag()
+    private var viewModel = ListViewModel()
+    private var disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
         addSubview(tableView)
         tableView.anchor(top: topAnchor, bottom: bottomAnchor, left: leftAnchor, right: rightAnchor)
+        tableView.rowHeight = 70.0
+        
         bindTableData()
     }
     
     private func bindTableData() {
         
-        viewModel.items.bind(
-            to: tableView.rx.items(
-                cellIdentifier: "cell",
-                cellType: UITableViewCell.self)
-        ) { row, model, cell in
-            cell.textLabel?.text = model.title
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 25)
-            cell.imageView?.image = UIImage(systemName: model.imageName)
-        }.disposed(by: bag)
+        tableView.rx.modelSelected(ListModel.self).bind { tweet in
+            print(tweet.initTweet)
+        }.disposed(by: disposeBag)
         
-        tableView.rx.itemSelected
-            .subscribe(onNext: { indexPath in
-                print(indexPath.row)
-//                self.goView()
-            })
-            .disposed(by: bag)
-        
-        tableView.rx.modelSelected(Product.self).bind { product in
-            print(product.title)
-        }.disposed(by: bag)
-        
-        viewModel.fetchItems()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
