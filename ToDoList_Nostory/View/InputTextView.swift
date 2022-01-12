@@ -16,7 +16,7 @@ class InputTextView: UIView, UITextFieldDelegate {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
-        textField.placeholder = "入力欄"
+//        textField.placeholder = "入力欄"
         textField.textAlignment = .center
         return textField
     }()

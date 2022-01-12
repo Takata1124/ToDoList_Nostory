@@ -50,7 +50,8 @@ class HomeViewController: UIViewController {
          baseStackView.topAnchor.constraint(equalTo: view.topAnchor),
          baseStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
          baseStackView.leftAnchor.constraint(equalTo: view.leftAnchor),
-         baseStackView.rightAnchor.constraint(equalTo: view.rightAnchor),].forEach { $0.isActive = true }
+         baseStackView.rightAnchor.constraint(equalTo: view.rightAnchor),]
+        .forEach { $0.isActive = true }
     }
     
     private func setupBindings() {
@@ -64,7 +65,7 @@ class HomeViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        bottomView.searchButton.button?.rx.tap
+        bottomView.settingButton.button?.rx.tap
             .asDriver()
             .drive { [weak self] _ in
                 
@@ -80,28 +81,32 @@ class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        bottomView.searchButton.button?.rx.tap
+            .asDriver()
+            .drive { _ in
+                print("search")
+            }
+            .disposed(by: disposeBag)
+        
         //viewControllerでないと処理が走らない
         listViewModel.titleArray
             .asDriver()
-            .drive(middleView.tableView.rx.items(
-                cellIdentifier: "cell", cellType: TaskCell.self)
+            .drive(
+            middleView.tableView.rx.items(cellIdentifier: "cell", cellType: TaskCell.self)
             ) { (row, model, cell) in
                 // cellの描画処理
-                cell.nameLabel.text = model.initTweet
-            }.disposed(by: disposeBag)
+                cell.nameLabel.text = model.taskName
+            }
+            .disposed(by: disposeBag)
         
         inputTextView.textField.rx.controlEvent(.editingDidEnd)
             .asDriver()
-            .compactMap {[unowned self] in inputTextView.textField.text }
+            .compactMap {[unowned self] in inputTextView.textField.text}
             .drive(onNext: { text in
                 // キーボードが閉じた時に処理が走る
-                print(text)
                 print("editingDidEnd")
-                
-                if text != "" { self.listViewModel.append(ListModel(initTweet: text)) } else { return }
-                    
+                if text != "" { self.listViewModel.append(ListModel(taskName: text)) } else { return }
             })
-            
             .disposed(by: disposeBag)
     }
 }

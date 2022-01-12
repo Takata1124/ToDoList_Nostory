@@ -30,11 +30,12 @@ extension UINavigationItem {
         stackView.axis = .vertical
         
         //イニシャライズ後ボタンのプロパティを入力しなければエラー
-        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: action)
-        addBtn_2 = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: action)
+//        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: action)
+        addBtn_2 = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: action)
 
         self.titleView = stackView
-        self.leftBarButtonItem = addBtn
+//        self.leftBarButtonItem = addBtn
         self.rightBarButtonItem = addBtn_2
+        self.rightBarButtonItem?.tintColor = .black
     }
 }

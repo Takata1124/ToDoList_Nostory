@@ -13,8 +13,8 @@ class BottomView: UIView {
     
     let plusButton = BottomButtonView(width: 70, imageName: "plus")
     let uiButton_2 = BottomButtonView(width: 70, title: "New")
-    let uiButton_3 = BottomButtonView(width: 70, imageName: "bell")
-    let searchButton = BottomButtonView(width: 70, imageName: "gearshape")
+    let searchButton = BottomButtonView(width: 70, imageName: "magnifyingglass")
+    let settingButton = BottomButtonView(width: 70, imageName: "gearshape")
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,7 +27,7 @@ class BottomView: UIView {
         
         backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
         
-        let baseStackView = UIStackView(arrangedSubviews: [plusButton, uiButton_2, uiButton_3, searchButton])
+        let baseStackView = UIStackView(arrangedSubviews: [plusButton, uiButton_2, searchButton, settingButton])
         baseStackView.axis = .horizontal
         baseStackView.distribution = .fillEqually
         baseStackView.spacing = 10
@@ -43,8 +43,7 @@ class BottomView: UIView {
     }
     
     private func setupBindings() {
-        
-        
+          
     }
     
     required init?(coder: NSCoder) {
