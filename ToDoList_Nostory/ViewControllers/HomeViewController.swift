@@ -13,12 +13,14 @@ class HomeViewController: UIViewController {
     
     //UIViewで型を指定するとエラーになる
     let bottomView = BottomView()
-    let middleView = MiddleView()
+    let middleView = MiddleView(cellHight: 150, tableCell: TaskCell.self, cellIdentifier: "homeCell")
     let topView = TopView()
-    //inputViewはエラー
-    let inputTextView = InputTextView()
+    
+    var inputTextView = InputTextView()
+    var backView = UIView()
     
     let detailViewController = DetailViewController()
+    let searchController = setSearchController()
     
     let listViewModel = ListViewModel()
     
@@ -36,22 +38,33 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .white
         
         self.navigationItem.setTitleView(withTitle: "Home")
+        navigationItem.searchController = searchController
+        navigationItem.searchController?.searchBar.setSearchTextFieldBackgroundColor(color: .rgb(red: 200, green: 200, blue: 200))
         
-        let baseStackView = UIStackView(arrangedSubviews: [topView, inputTextView, middleView, bottomView])
+        let baseStackView = UIStackView(arrangedSubviews: [topView, middleView, bottomView])
         baseStackView.axis = .vertical
         baseStackView.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(baseStackView)
         
-        [topView.heightAnchor.constraint(equalToConstant: 100),
-         inputTextView.heightAnchor.constraint(equalToConstant: 100),
+        [topView.heightAnchor.constraint(equalToConstant: 150),
          bottomView.heightAnchor.constraint(equalToConstant: 125),
          
          baseStackView.topAnchor.constraint(equalTo: view.topAnchor),
          baseStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
          baseStackView.leftAnchor.constraint(equalTo: view.leftAnchor),
          baseStackView.rightAnchor.constraint(equalTo: view.rightAnchor),]
-        .forEach { $0.isActive = true }
+            .forEach { $0.isActive = true }
+        
+        backView = .init(frame: CGRect(x: 0, y: 150, width: self.view.frame.width, height: 622))
+        backView.backgroundColor = .rgb(red: 0, green: 0, blue: 0, alpha: 0.7)
+        backView.isHidden = true
+        baseStackView.addSubview(backView)
+        
+        inputTextView = .init(frame: CGRect(x: self.view.frame.width/2 - 200, y: self.view.frame.height/2 - 100, width: 400, height: 125))
+        inputTextView.layer.cornerRadius = 20
+        inputTextView.isHidden = true
+        baseStackView.addSubview(inputTextView)
     }
     
     private func setupBindings() {
@@ -59,40 +72,43 @@ class HomeViewController: UIViewController {
         middleView.tableView.rx.itemSelected
             .subscribe(onNext: { indexPath in
                 print(indexPath.row)
-                
-                self.detailViewController.modalPresentationStyle = .fullScreen
-                self.present(self.detailViewController, animated: true, completion: nil)
+                self.middleView.tableView.deselectRow(at: indexPath, animated: true)
+                self.navigationController?.pushViewController(self.detailViewController, animated: true)
             })
             .disposed(by: disposeBag)
         
-        bottomView.settingButton.button?.rx.tap
+        bottomView.settingButton.button.rx.tap
             .asDriver()
             .drive { [weak self] _ in
                 
-                self?.detailViewController.modalPresentationStyle = .fullScreen
-                self?.present(self!.detailViewController, animated: true, completion: nil)
+//                self?.detailViewController.modalPresentationStyle = .fullScreen
+//                self?.present(self!.detailViewController, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
         
-        bottomView.plusButton.button?.rx.tap
+        bottomView.plusButton.button.rx.tap
             .asDriver()
             .drive { [weak self] _ in
+                print("tap")
+                self?.backView.isHidden = false
+                self?.inputTextView.isHidden = false
                 self?.inputTextView.textInput()
             }
             .disposed(by: disposeBag)
         
-        bottomView.searchButton.button?.rx.tap
+        bottomView.searchButton.button.rx.tap
             .asDriver()
             .drive { _ in
                 print("search")
+                self.searchController.textInput()
             }
             .disposed(by: disposeBag)
         
-        //viewControllerでないと処理が走らない
+        //下記内容はviewControllerでないと処理が走らない
         listViewModel.titleArray
             .asDriver()
             .drive(
-            middleView.tableView.rx.items(cellIdentifier: "cell", cellType: TaskCell.self)
+                middleView.tableView.rx.items(cellIdentifier: "homeCell", cellType: TaskCell.self)
             ) { (row, model, cell) in
                 // cellの描画処理
                 cell.nameLabel.text = model.taskName
@@ -105,6 +121,8 @@ class HomeViewController: UIViewController {
             .drive(onNext: { text in
                 // キーボードが閉じた時に処理が走る
                 print("editingDidEnd")
+                self.inputTextView.isHidden = true
+                self.backView.isHidden = true
                 if text != "" { self.listViewModel.append(ListModel(taskName: text)) } else { return }
             })
             .disposed(by: disposeBag)

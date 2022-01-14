@@ -15,29 +15,29 @@ class MiddleView: UIView {
         
         let table = UITableView()
         //forCellReuseIdentifierは"cell"でないとエラー
-        table.register(TaskCell.self, forCellReuseIdentifier: "cell")
+        //        table.register(TaskCell.self, forCellReuseIdentifier: "cell")
         return table
     }()
     
     private var viewModel = ListViewModel()
     private var disposeBag = DisposeBag()
     
-    override init(frame: CGRect) {
+    init(cellHight: CGFloat, tableCell: UITableViewCell.Type, cellIdentifier: String) {
         super.init(frame: .zero)
+        
+        tableView.register(tableCell.self, forCellReuseIdentifier: cellIdentifier)
         
         addSubview(tableView)
         tableView.anchor(top: topAnchor, bottom: bottomAnchor, left: leftAnchor, right: rightAnchor)
-        tableView.rowHeight = 70.0
-        tableView.separatorColor = .black
+        tableView.rowHeight = cellHight
+//        tableView.backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
+//        tableView.separatorColor = .red
         tableView.separatorInset = .zero
         bindTableData()
     }
     
     private func bindTableData() {
         
-        tableView.rx.modelSelected(ListModel.self).bind { tweet in
-            print(tweet.taskName)
-        }.disposed(by: disposeBag)
         
     }
     

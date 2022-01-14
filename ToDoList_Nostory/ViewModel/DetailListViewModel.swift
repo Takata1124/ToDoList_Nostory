@@ -1,31 +1,31 @@
 //
-//  ListViewModel.swift
+//  DetailListViewModel.swift
 //  ToDoList_Nostory
 //
-//  Created by t032fj on 2022/01/12.
+//  Created by t032fj on 2022/01/13.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 
-struct ListModel: Codable {
+struct DetailListModel: Codable {
     
-    let taskName: String
+    let detailName: String
 }
 
-class ListViewModel {
+class DetailListViewModel {
     
     let userDefaults = UserDefaults.standard
     
-    var historyArray: [ListModel] = []
-    var titleArray = BehaviorRelay<[ListModel]>(value: [ListModel(taskName: "default")])
+    var historyArray: [DetailListModel] = []
+    var titleArray = BehaviorRelay<[DetailListModel]>(value: [DetailListModel(detailName: "default")])
 
     init() {
         decodeDefault()
     }
     
-    func encodeDefault(list: [ListModel]) {
+    func encodeDefault(list: [DetailListModel]) {
         
 //        let encoder = JSONEncoder()
         //配列をエンコードする場合はpropertyListEncorder
@@ -38,7 +38,7 @@ class ListViewModel {
         
         if let listTask = userDefaults.object(forKey: "list") as? Data {
 //            let decoder = JSONDecoder()
-            if let loadedPerson = try? PropertyListDecoder().decode([ListModel].self, from: listTask) {
+            if let loadedPerson = try? PropertyListDecoder().decode([DetailListModel].self, from: listTask) {
                 historyArray = loadedPerson
                 print(loadedPerson)
             } else {
@@ -51,10 +51,11 @@ class ListViewModel {
         print(historyArray)
     }
     
-    func append(_ element: ListModel) {
+    func append(_ element: DetailListModel) {
         
         historyArray.append(element)
         encodeDefault(list: historyArray)
         decodeDefault()
     }
 }
+

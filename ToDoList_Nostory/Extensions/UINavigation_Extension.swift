@@ -31,7 +31,7 @@ extension UINavigationItem {
         
         //イニシャライズ後ボタンのプロパティを入力しなければエラー
 //        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: action)
-        addBtn_2 = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: action)
+        addBtn_2 = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: action)
 
         self.titleView = stackView
 //        self.leftBarButtonItem = addBtn

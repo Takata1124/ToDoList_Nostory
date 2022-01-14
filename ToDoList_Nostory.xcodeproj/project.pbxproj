@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6829B6002790313C003525D3 /* setSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829B5FF2790313C003525D3 /* setSearchController.swift */; };
+		6829B60227906E29003525D3 /* DetailListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829B60127906E29003525D3 /* DetailListViewModel.swift */; };
+		6829B60427906FC7003525D3 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829B60327906FC7003525D3 /* DetailCell.swift */; };
+		6829B60727917EB0003525D3 /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829B60627917EB0003525D3 /* BottomButton.swift */; };
+		6829B609279197D1003525D3 /* BottomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829B608279197D1003525D3 /* BottomButtonView.swift */; };
 		683B1A9E2789C3480053856A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B1A9D2789C3480053856A /* AppDelegate.swift */; };
 		683B1AA02789C3480053856A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B1A9F2789C3480053856A /* SceneDelegate.swift */; };
 		683B1AA22789C3480053856A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683B1AA12789C3480053856A /* HomeViewController.swift */; };
@@ -27,9 +32,15 @@
 		68746E0B278B10CE00501CC1 /* UIColor_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68746E0A278B10CE00501CC1 /* UIColor_Extension.swift */; };
 		68746E0D278B193D00501CC1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68746E0C278B193D00501CC1 /* DetailViewController.swift */; };
 		68F69570278EDE940045193D /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F6956F278EDE940045193D /* ListViewModel.swift */; };
+		68F6957227901C370045193D /* UISearchBar_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F6957127901C370045193D /* UISearchBar_Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6829B5FF2790313C003525D3 /* setSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setSearchController.swift; sourceTree = "<group>"; };
+		6829B60127906E29003525D3 /* DetailListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailListViewModel.swift; sourceTree = "<group>"; };
+		6829B60327906FC7003525D3 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
+		6829B60627917EB0003525D3 /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
+		6829B608279197D1003525D3 /* BottomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButtonView.swift; sourceTree = "<group>"; };
 		683B1A9A2789C3480053856A /* ToDoList_Nostory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList_Nostory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		683B1A9D2789C3480053856A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		683B1A9F2789C3480053856A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +61,7 @@
 		68746E0A278B10CE00501CC1 /* UIColor_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_Extension.swift; sourceTree = "<group>"; };
 		68746E0C278B193D00501CC1 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		68F6956F278EDE940045193D /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		68F6957127901C370045193D /* UISearchBar_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchBar_Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +78,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6829B60527917E95003525D3 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				6829B60627917EB0003525D3 /* BottomButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		683B1A912789C3480053856A = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +106,7 @@
 		683B1A9C2789C3480053856A /* ToDoList_Nostory */ = {
 			isa = PBXGroup;
 			children = (
+				6829B60527917E95003525D3 /* Button */,
 				68F6956E278EDE530045193D /* ViewModel */,
 				6865AAE7278D0970009ED8D3 /* Delegate */,
 				6865AAE5278C74F4009ED8D3 /* Cell */,
@@ -107,6 +128,7 @@
 				683B1AB62789DCFC0053856A /* UIimage_Extension.swift */,
 				68746E0A278B10CE00501CC1 /* UIColor_Extension.swift */,
 				6865AAE8278D09CE009ED8D3 /* UINavigation_Extension.swift */,
+				68F6957127901C370045193D /* UISearchBar_Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -116,6 +138,7 @@
 			children = (
 				683B1AA12789C3480053856A /* HomeViewController.swift */,
 				68746E0C278B193D00501CC1 /* DetailViewController.swift */,
+				6829B5FF2790313C003525D3 /* setSearchController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -127,6 +150,7 @@
 				68746E03278A9EA300501CC1 /* MiddleView.swift */,
 				683B1AB42789D5BC0053856A /* BottomView.swift */,
 				6865AAEA278D9DE7009ED8D3 /* InputTextView.swift */,
+				6829B608279197D1003525D3 /* BottomButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -143,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				6865AAE0278C5934009ED8D3 /* TaskCell.swift */,
+				6829B60327906FC7003525D3 /* DetailCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -160,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				68F6956F278EDE940045193D /* ListViewModel.swift */,
+				6829B60127906E29003525D3 /* DetailListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -248,15 +274,21 @@
 				683B1AA22789C3480053856A /* HomeViewController.swift in Sources */,
 				683B1AB52789D5BC0053856A /* BottomView.swift in Sources */,
 				6865AAE9278D09CE009ED8D3 /* UINavigation_Extension.swift in Sources */,
+				6829B60227906E29003525D3 /* DetailListViewModel.swift in Sources */,
+				6829B60727917EB0003525D3 /* BottomButton.swift in Sources */,
 				68F69570278EDE940045193D /* ListViewModel.swift in Sources */,
 				683B1A9E2789C3480053856A /* AppDelegate.swift in Sources */,
 				6865AAE1278C5934009ED8D3 /* TaskCell.swift in Sources */,
 				683B1AB32789CD890053856A /* UIView_Extension.swift in Sources */,
 				683B1AA02789C3480053856A /* SceneDelegate.swift in Sources */,
+				6829B6002790313C003525D3 /* setSearchController.swift in Sources */,
 				683B1ABD2789FC4B0053856A /* TitleLabel.swift in Sources */,
+				68F6957227901C370045193D /* UISearchBar_Extension.swift in Sources */,
+				6829B609279197D1003525D3 /* BottomButtonView.swift in Sources */,
 				68746E04278A9EA300501CC1 /* MiddleView.swift in Sources */,
 				683B1ABF2789FDBF0053856A /* TopView.swift in Sources */,
 				683B1AB72789DCFC0053856A /* UIimage_Extension.swift in Sources */,
+				6829B60427906FC7003525D3 /* DetailCell.swift in Sources */,
 				68746E0B278B10CE00501CC1 /* UIColor_Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
