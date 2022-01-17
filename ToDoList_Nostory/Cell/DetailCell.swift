@@ -15,13 +15,8 @@ class DetailCell: UITableViewCell {
         textFiled.textColor = .black
         textFiled.backgroundColor = .clear
         textFiled.textAlignment = .left
-                textFiled.layer.borderWidth = 1.0
-                textFiled.layer.borderColor = UIColor.black.cgColor
-        //        textFiled.layer.cornerRadius = 20
-        //        textFiled.layer.shadowOffset = .init(width: 2, height: 4)
-        //        textFiled.layer.shadowColor = UIColor.black.cgColor
-        //        textFiled.layer.shadowOpacity = 0.3
-        //        textFiled.layer.shadowRadius = 50
+        textFiled.layer.borderWidth = 1.0
+        textFiled.layer.borderColor = UIColor.black.cgColor
         textFiled.isEnabled = false
         return textFiled
     }()
@@ -36,7 +31,7 @@ class DetailCell: UITableViewCell {
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.2
         view.layer.shadowRadius = 50
-//        view.backgroundColor = .lightGray
+        //        view.backgroundColor = .lightGray
         return view
     }()
     
@@ -57,7 +52,7 @@ class DetailCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-          
+        
         setupView()
     }
     

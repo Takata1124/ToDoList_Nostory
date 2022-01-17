@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
     
     //UIViewで型を指定するとエラーになる
     let bottomView = BottomView()
-    let middleView = MiddleView(cellHight: 150, tableCell: TaskCell.self, cellIdentifier: "homeCell")
+    let middleView = MiddleView()
     let topView = TopView()
     let collectionView = CollectionView()
     
@@ -26,6 +26,7 @@ class HomeViewController: UIViewController {
     let searchController = setSearchController()
     
     let listViewModel = ListViewModel()
+    let userListViewModel = UserListViewModel()
     
     let collectionTableViewCell = CollectionTableViewCell()
     
@@ -34,8 +35,10 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         setupLayout()
         setupBindings()
+        
     }
     
     private func setupLayout() {
@@ -46,7 +49,7 @@ class HomeViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.searchController?.searchBar.setSearchTextFieldBackgroundColor(color: .rgb(red: 200, green: 200, blue: 200))
         
-        let baseStackView = UIStackView(arrangedSubviews: [topView, collectionView, bottomView])
+        let baseStackView = UIStackView(arrangedSubviews: [topView, middleView, bottomView])
         baseStackView.axis = .vertical
         baseStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -74,18 +77,19 @@ class HomeViewController: UIViewController {
     
     private func setupBindings() {
         
-        middleView.tableView.rx.itemSelected
-            .subscribe(onNext: { indexPath in
-                print(indexPath.row)
-                self.middleView.tableView.deselectRow(at: indexPath, animated: true)
-                self.navigationController?.pushViewController(self.detailViewController, animated: true)
-            })
-            .disposed(by: disposeBag)
+//        middleView.tableView.rx.itemSelected
+//            .subscribe(onNext: { indexPath in
+//                print(indexPath.row)
+//                self.middleView.tableView.deselectRow(at: indexPath, animated: true)
+//                self.navigationController?.pushViewController(self.detailViewController, animated: true)
+//            })
+//            .disposed(by: disposeBag)
+
         
         bottomView.settingButton.button.rx.tap
             .asDriver()
             .drive { [weak self] _ in
-//                self.middleView.tableView.deselectRow(at: indexPath, animated: true)
+                //                self.middleView.tableView.deselectRow(at: indexPath, animated: true)
                 self?.navigationController?.pushViewController(self!.timelineViewController, animated: true)
             }
             .disposed(by: disposeBag)
@@ -108,14 +112,37 @@ class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-//        //下記内容はviewControllerでないと処理が走らない
+        //下記内容はviewControllerでないと処理が走らない
 //        listViewModel.titleArray
 //            .asDriver()
 //            .drive(
 //                middleView.tableView.rx.items(cellIdentifier: "homeCell", cellType: TaskCell.self)
 //            ) { (row, model, cell) in
 //                // cellの描画処理
-//                cell.nameLabel.text = model.taskName
+////                cell.nameLabel.text = model.taskName
+//                cell.nameLabel.text = "hello"
+//            }
+//            .disposed(by: disposeBag)
+//        
+//        listViewModel.titleArray.bind(
+//            to: middleView.tableView.rx.items(
+//                cellIdentifier: "cell", cellType: UITableViewCell.self)
+//        ){ row, item, cell in
+//            cell.textLabel?.text = item.taskName
+//            
+//        }.disposed(by: disposeBag)
+        
+//        let tileCollectionViewCell = TileCollectionViewCell()
+        
+//        userListViewModel.users
+//            .asDriver()
+//            .drive(
+//                collectionTableViewCell.collectionView.rx.items(
+//                    cellIdentifier: "TileCollectionViewCell",
+//                    cellType: TileCollectionViewCell.self
+//                )
+//            ) { (row, model, cell) in
+//                cell.label.text = model.name
 //            }
 //            .disposed(by: disposeBag)
         
@@ -124,18 +151,20 @@ class HomeViewController: UIViewController {
             .compactMap {[unowned self] in inputTextView.textField.text}
             .drive(onNext: { text in
                 
-                let collectionTableViewCellViewModel = CollectionTableViewCellViewModel()
-                let collectionTableViewCell = CollectionTableViewCell()
+                //                let collectionTableViewCellViewModel = CollectionTableViewCellViewModel()
+                //                let collectionTableViewCell = CollectionTableViewCell()
                 
-                print("editingDidEnd")
+                //                print("editingDidEnd")
                 self.inputTextView.isHidden = true
                 self.backView.isHidden = true
                 
                 if text != "" {
-                    collectionTableViewCellViewModel.TextAppend(element: TileCollectionViewCellViewModel(name: text))
-//                    collectionTableViewCell.reloadTableData()
+                    //                    collectionTableViewCellViewModel.TextAppend(element: TileCollectionViewCellViewModel(name: text))
+                    //                    self.collectionTableViewCell.TextAppend(text)
+                    print(text)
                 }
-                    else { return }
+                else { return }
+                
             
             })
             .disposed(by: disposeBag)

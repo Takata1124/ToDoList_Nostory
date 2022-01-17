@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol CollectionTableViewCellDelegate: AnyObject {
     
@@ -13,12 +15,38 @@ protocol CollectionTableViewCellDelegate: AnyObject {
  
 }
 
+//class Observable<T> {
+//
+//    var value: T? {
+//        didSet {
+//            listeners.forEach {
+//                $0(value)
+//            }
+//        }
+//    }
+//
+//    init(_ value: T?) {
+//        self.value = value
+//    }
+//
+//    private var listeners: [((T?) -> Void )] = []
+//
+//    func bind(_ listener: @escaping (T?) -> Void) {
+//        listener(value)
+//        self.listeners.append(listener)
+//    }
+//}
 
 
-class CollectionTableViewCell: UITableViewCell, UICollectionViewDataSource {
+
+struct UserTableViewCellViewModel: Codable {
+    let name: String
+}
+
+
+class CollectionTableViewCell: UITableViewCell {
     
     static let identifier = "CollectionTableViewCell"
-    
     weak var delegatee: CollectionTableViewCellDelegate?
     
     private var viewModels: [TileCollectionViewCellViewModel] = []
@@ -40,10 +68,13 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDataSource {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .systemBackground
         contentView.addSubview(collectionView)
         collectionView.delegate = self
-        collectionView.dataSource = self
+//        collectionView.dataSource = self
+        
+//        setUpBinding()
+//
+//        TextAppend("hellohello")
     }
     
     override func layoutSubviews() {
@@ -55,24 +86,29 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModels.count
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: TileCollectionViewCell.identifier, for: indexPath
-        ) as? TileCollectionViewCell else {
-            fatalError()
-        }
-        cell.configure(with: viewModels[indexPath.row])
-        return cell
-    }
     
-    func configure(with viewModel: [TileCollectionViewCellViewModel]) {
-        self.viewModels = viewModel
-        collectionView.reloadData()
-    }
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return viewModels.count
+////        return userViewModel.users.value.count
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(
+//            withReuseIdentifier: TileCollectionViewCell.identifier, for: indexPath
+//        ) as? TileCollectionViewCell else {
+//            fatalError()
+//        }
+//        cell.label.text = userViewModel.users.value[indexPath.row].name
+////        cell.configure(with: viewModels[indexPath.row])
+//        return cell
+//        
+//    }
+    
+//    func configure(with viewModel: [TileCollectionViewCellViewModel]) {
+//        self.viewModels = viewModel
+//    }
+    
     
     
 }
@@ -87,11 +123,11 @@ extension CollectionTableViewCell: UICollectionViewDelegate,  UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewModel = viewModels[indexPath.row]
+//        let viewModel = viewModels[indexPath.row]
         print(indexPath.row)
 //        self.middleView.tableView.deselectRow(at: indexPath, animated: true)
        
-        delegatee?.collectionTableViewCellDidTapItem(with: viewModel)
+//        delegatee?.collectionTableViewCellDidTapItem(with: viewModel)
     }
 }
  

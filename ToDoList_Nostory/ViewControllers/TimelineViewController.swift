@@ -7,40 +7,6 @@
 
 import UIKit
 
-class Observable<T> {
-    
-    var value: T? {
-        didSet {
-            listeners.forEach {
-                $0(value)
-            }
-        }
-    }
-    
-    init(_ value: T?) {
-        self.value = value
-    }
-    
-    private var listeners: [((T?) -> Void )] = []
-    
-    func bind(_ listener: @escaping (T?) -> Void) {
-        listener(value)
-        self.listeners.append(listener)
-    }
-}
-
-struct UserListViewModel {
-    
-    var users: Observable<[UserTableViewCellViewModel]> = Observable(
-        [UserTableViewCellViewModel(name: "default"),
-         UserTableViewCellViewModel(name: "hello"),
-         UserTableViewCellViewModel(name: "heyhey"),
-        ])
-}
-
-struct UserTableViewCellViewModel: Codable {
-    let name: String
-}
 
 class TimelineViewController: UIViewController, UITableViewDataSource {
     
@@ -53,8 +19,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
         return table
     }()
     
-    var viewModel = UserListViewModel()
-    var viewArray: [UserTableViewCellViewModel] = []
+    var userViewModel = UserListViewModel()
+    var userViewArray: [UserTableViewCellViewModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +38,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
     
     private func setupBinding() {
         
-        viewModel.users.bind { [weak self] _ in
+        userViewModel.users.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
@@ -83,7 +49,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
     
     func fetchData() {
         
-        encodeDefault(list: viewArray)
+        encodeDefault(list: userViewArray)
         decodeDefault()
     }
     
@@ -101,7 +67,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
             do {
                 let userModels = try? PropertyListDecoder().decode([UserTableViewCellViewModel].self, from: listTask)
 
-                viewArray = userModels!
+                userViewArray = userModels!
             } catch {
                 fatalError()
             }
@@ -113,18 +79,19 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.users.value?.count ?? 0
+        return userViewModel.users.value.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = viewModel.users.value?[indexPath.row].name
+        cell.textLabel?.text = userViewModel.users.value[indexPath.row].name
         return cell
     }
     
     func TextAppend(_ element: String) {
         
-        viewModel.users.value?.append(UserTableViewCellViewModel(name: element))
+//        userViewModel.users.value.append(UserTableViewCellViewModel(name: element))
+//        print(userViewModel.users.value ?? "")
     }
     
 }

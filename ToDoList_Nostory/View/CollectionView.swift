@@ -33,7 +33,8 @@ class CollectionView: UIView, CollectionTableViewCellDelegate, UITableViewDelega
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return collectionTableViewCellViewModel.viewModels.count
+//        return collectionTableViewCellViewModel.viewModels.count
+        return 1
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -48,7 +49,7 @@ class CollectionView: UIView, CollectionTableViewCellDelegate, UITableViewDelega
             fatalError()
         }
         cell.delegatee = self
-        cell.configure(with: viewModel)
+//        cell.configure(with: viewModel)
         return cell
     }
     

@@ -12,7 +12,7 @@ import RxCocoa
 class DetailViewController: UIViewController {
     
     let bottomView = BottomView()
-    let middleView = MiddleView(cellHight: 150, tableCell: DetailCell.self, cellIdentifier: "cell")
+    let middleView = MiddleView()
     let topView = TopView()
     
     let detailListViewModel = DetailListViewModel()
@@ -61,16 +61,16 @@ class DetailViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        detailListViewModel.titleArray
-            .asDriver()
-            .drive(
-                middleView.tableView.rx.items(cellIdentifier: "cell", cellType: DetailCell.self)
-            ) { (row, model, cell) in
-                // cellの描画処理
-                print(model)
-                cell.detailText.text = model.detailName
-            }
-            .disposed(by: disposeBag)
+//        detailListViewModel.titleArray
+//            .asDriver()
+//            .drive(
+//                middleView.tableView.rx.items(cellIdentifier: "cell", cellType: DetailCell.self)
+//            ) { (row, model, cell) in
+//                // cellの描画処理
+//                print(model)
+//                cell.detailText.text = model.detailName
+//            }
+//            .disposed(by: disposeBag)
         
         bottomView.searchButton.button.rx.tap
             .asDriver()

@@ -11,7 +11,7 @@ class TileCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "TileCollectionViewCell"
     
-    private let label: UILabel = {
+    let label: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
@@ -37,6 +37,7 @@ class TileCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 6
         contentView.layer.borderColor = UIColor.secondaryLabel.cgColor
         contentView.layer.borderWidth = 1.5
+        contentView.backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
     }
     
     override func layoutSubviews() {
@@ -53,7 +54,7 @@ class TileCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with viewModel: TileCollectionViewCellViewModel) {
-        contentView.backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
+        
         label.text = viewModel.name
     }
 }

@@ -18,7 +18,7 @@ class InputTextView: UIView, UITextFieldDelegate {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
-        textField.placeholder = "＋Input"
+//        textField.placeholder = "＋Input"
         textField.textAlignment = .center
         textField.layer.borderColor = UIColor.black.cgColor
         textField.layer.borderWidth = 1.0
@@ -45,8 +45,6 @@ class InputTextView: UIView, UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        
-        print("hhhh")
         
     }
     
