@@ -30,15 +30,7 @@ class MiddleView: UIView {
         addSubview(tableView)
         tableView.anchor(top: topAnchor, bottom: bottomAnchor, left: leftAnchor, right: rightAnchor)
         tableView.rowHeight = cellHight
-//        tableView.backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
-//        tableView.separatorColor = .red
         tableView.separatorInset = .zero
-        bindTableData()
-    }
-    
-    private func bindTableData() {
-        
-        
     }
     
     required init?(coder: NSCoder) {

@@ -43,13 +43,11 @@ class DetailViewController: UIViewController {
         
         [topView.heightAnchor.constraint(equalToConstant: 150),
          bottomView.heightAnchor.constraint(equalToConstant: 125),
-         
          baseStackView.topAnchor.constraint(equalTo: view.topAnchor),
          baseStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
          baseStackView.leftAnchor.constraint(equalTo: view.leftAnchor),
          baseStackView.rightAnchor.constraint(equalTo: view.rightAnchor),]
         .forEach { $0.isActive = true }
-        
     }
     
     private func setupBinding() {
@@ -71,7 +69,6 @@ class DetailViewController: UIViewController {
                 // cellの描画処理
                 print(model)
                 cell.detailText.text = model.detailName
-                print("hhh")
             }
             .disposed(by: disposeBag)
         

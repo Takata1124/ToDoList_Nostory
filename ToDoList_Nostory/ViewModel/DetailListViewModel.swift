@@ -19,6 +19,7 @@ class DetailListViewModel {
     let userDefaults = UserDefaults.standard
     
     var historyArray: [DetailListModel] = []
+    
     var titleArray = BehaviorRelay<[DetailListModel]>(value: [DetailListModel(detailName: "default")])
 
     init() {
@@ -27,8 +28,7 @@ class DetailListViewModel {
     
     func encodeDefault(list: [DetailListModel]) {
         
-//        let encoder = JSONEncoder()
-        //配列をエンコードする場合はpropertyListEncorder
+        //配列をエンコードする場合はpropertyListEncorder(encoder = JSONEncoder()はNG)
         if let encoded = try? PropertyListEncoder().encode(list) {
             userDefaults.set(encoded, forKey: "list")
         }
@@ -37,7 +37,6 @@ class DetailListViewModel {
     func decodeDefault() {
         
         if let listTask = userDefaults.object(forKey: "list") as? Data {
-//            let decoder = JSONDecoder()
             if let loadedPerson = try? PropertyListDecoder().decode([DetailListModel].self, from: listTask) {
                 historyArray = loadedPerson
                 print(loadedPerson)

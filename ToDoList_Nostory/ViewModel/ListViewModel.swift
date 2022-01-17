@@ -19,6 +19,7 @@ class ListViewModel {
     let userDefaults = UserDefaults.standard
     
     var historyArray: [ListModel] = []
+    
     var titleArray = BehaviorRelay<[ListModel]>(value: [ListModel(taskName: "default")])
 
     init() {

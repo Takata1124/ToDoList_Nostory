@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class HomeViewController: UIViewController {
     
@@ -15,14 +16,18 @@ class HomeViewController: UIViewController {
     let bottomView = BottomView()
     let middleView = MiddleView(cellHight: 150, tableCell: TaskCell.self, cellIdentifier: "homeCell")
     let topView = TopView()
+    let collectionView = CollectionView()
     
     var inputTextView = InputTextView()
     var backView = UIView()
     
     let detailViewController = DetailViewController()
+    let timelineViewController = TimelineViewController()
     let searchController = setSearchController()
     
     let listViewModel = ListViewModel()
+    
+    let collectionTableViewCell = CollectionTableViewCell()
     
     private let disposeBag = DisposeBag()
     
@@ -35,13 +40,13 @@ class HomeViewController: UIViewController {
     
     private func setupLayout() {
         
-        view.backgroundColor = .white
+        view.backgroundColor = .rgb(red: 200, green: 200, blue: 200, alpha: 1)
         
         self.navigationItem.setTitleView(withTitle: "Home")
         navigationItem.searchController = searchController
         navigationItem.searchController?.searchBar.setSearchTextFieldBackgroundColor(color: .rgb(red: 200, green: 200, blue: 200))
         
-        let baseStackView = UIStackView(arrangedSubviews: [topView, middleView, bottomView])
+        let baseStackView = UIStackView(arrangedSubviews: [topView, collectionView, bottomView])
         baseStackView.axis = .vertical
         baseStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -80,9 +85,8 @@ class HomeViewController: UIViewController {
         bottomView.settingButton.button.rx.tap
             .asDriver()
             .drive { [weak self] _ in
-                
-//                self?.detailViewController.modalPresentationStyle = .fullScreen
-//                self?.present(self!.detailViewController, animated: true, completion: nil)
+//                self.middleView.tableView.deselectRow(at: indexPath, animated: true)
+                self?.navigationController?.pushViewController(self!.timelineViewController, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -104,26 +108,35 @@ class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        //下記内容はviewControllerでないと処理が走らない
-        listViewModel.titleArray
-            .asDriver()
-            .drive(
-                middleView.tableView.rx.items(cellIdentifier: "homeCell", cellType: TaskCell.self)
-            ) { (row, model, cell) in
-                // cellの描画処理
-                cell.nameLabel.text = model.taskName
-            }
-            .disposed(by: disposeBag)
+//        //下記内容はviewControllerでないと処理が走らない
+//        listViewModel.titleArray
+//            .asDriver()
+//            .drive(
+//                middleView.tableView.rx.items(cellIdentifier: "homeCell", cellType: TaskCell.self)
+//            ) { (row, model, cell) in
+//                // cellの描画処理
+//                cell.nameLabel.text = model.taskName
+//            }
+//            .disposed(by: disposeBag)
         
         inputTextView.textField.rx.controlEvent(.editingDidEnd)
             .asDriver()
             .compactMap {[unowned self] in inputTextView.textField.text}
             .drive(onNext: { text in
-                // キーボードが閉じた時に処理が走る
+                
+                let collectionTableViewCellViewModel = CollectionTableViewCellViewModel()
+                let collectionTableViewCell = CollectionTableViewCell()
+                
                 print("editingDidEnd")
                 self.inputTextView.isHidden = true
                 self.backView.isHidden = true
-                if text != "" { self.listViewModel.append(ListModel(taskName: text)) } else { return }
+                
+                if text != "" {
+                    collectionTableViewCellViewModel.TextAppend(element: TileCollectionViewCellViewModel(name: text))
+//                    collectionTableViewCell.reloadTableData()
+                }
+                    else { return }
+            
             })
             .disposed(by: disposeBag)
     }

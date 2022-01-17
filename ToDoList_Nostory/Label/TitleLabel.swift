@@ -14,22 +14,11 @@ class TitleLabel: UILabel {
         
         font = .boldSystemFont(ofSize: 25)
         self.text = text
-        self.textColor = textColor
-        
-//        layer.borderWidth = 3
-//        layer.borderColor = textColor.cgColor
-//        layer.cornerRadius = 10
-        
+        self.textColor = textColor 
         textAlignment = .center
         alpha = 1
     }
-    
-//    init(text: String, font: UIFont) {
-//        super.init(frame: .zero)
-//        self.font = font
-//        textColor = .white
-//        self.text = text
-//    }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

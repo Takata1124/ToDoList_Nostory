@@ -12,7 +12,6 @@ class setSearchController: UISearchController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        searchBar.setSearchTextFieldBackgroundColor(color: .rgb(red: 200, green: 200, blue: 200))
         searchBar.delegate = self
         searchBar.tintColor = .black
 //        searchBar.textField?.delegate = self

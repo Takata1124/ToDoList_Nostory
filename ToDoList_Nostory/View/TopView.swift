@@ -15,9 +15,6 @@ class TopView: UIView {
         super.init(frame: frame)
         
         backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
-//        addSubview(titleLabel)
-        
-//        titleLabel.anchor(bottom: bottomAnchor, centerX: centerXAnchor, bottomPadding: 20)
     }
     
     required init?(coder: NSCoder) {
