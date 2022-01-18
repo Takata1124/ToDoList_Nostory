@@ -10,13 +10,21 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class HomeViewController: UIViewController {
+let screenSize: CGSize = CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
+
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    var tasks = BehaviorRelay<[Task]>(value: [
+//        Task(title: "name", fileData: nil),
+//        Task(title: "string", fileData: nil)
+    ])
     
     //UIViewで型を指定するとエラーになる
     let bottomView = BottomView()
     let middleView = MiddleView()
     let topView = TopView()
     let collectionView = CollectionView()
+    let middleCollectionView = MiddleCollectionView()
     
     var inputTextView = InputTextView()
     var backView = UIView()
@@ -24,6 +32,7 @@ class HomeViewController: UIViewController {
     let detailViewController = DetailViewController()
     let timelineViewController = TimelineViewController()
     let searchController = setSearchController()
+    let addTaskViewController = AddTaskViewController()
     
     let listViewModel = ListViewModel()
     let userListViewModel = UserListViewModel()
@@ -35,10 +44,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         setupLayout()
         setupBindings()
-        
     }
     
     private func setupLayout() {
@@ -49,7 +56,7 @@ class HomeViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.searchController?.searchBar.setSearchTextFieldBackgroundColor(color: .rgb(red: 200, green: 200, blue: 200))
         
-        let baseStackView = UIStackView(arrangedSubviews: [topView, middleView, bottomView])
+        let baseStackView = UIStackView(arrangedSubviews: [topView, middleCollectionView, bottomView])
         baseStackView.axis = .vertical
         baseStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -57,6 +64,7 @@ class HomeViewController: UIViewController {
         
         [topView.heightAnchor.constraint(equalToConstant: 150),
          bottomView.heightAnchor.constraint(equalToConstant: 125),
+         //         middleView.heightAnchor.constraint(equalToConstant: 150),
          
          baseStackView.topAnchor.constraint(equalTo: view.topAnchor),
          baseStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -73,34 +81,59 @@ class HomeViewController: UIViewController {
         inputTextView.layer.cornerRadius = 20
         inputTextView.isHidden = true
         baseStackView.addSubview(inputTextView)
+        
+        middleCollectionView.uiCollectionView.delegate = self
+        middleCollectionView.uiCollectionView.dataSource = self
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tasks.value.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TileCollectionViewCell", for: indexPath) as! TileCollectionViewCell
+        
+        //配列を逆にする
+        let totalCount = tasks.value.count - 1
+        var cellCount = totalCount - indexPath.item
+        
+        cell.label.text = tasks.value[cellCount].title
+        cell.imageView.image = UIImage(data: tasks.value[cellCount].fileData! as Data)
+        
+        return cell
+        
     }
     
     private func setupBindings() {
         
-//        middleView.tableView.rx.itemSelected
-//            .subscribe(onNext: { indexPath in
-//                print(indexPath.row)
-//                self.middleView.tableView.deselectRow(at: indexPath, animated: true)
-//                self.navigationController?.pushViewController(self.detailViewController, animated: true)
-//            })
-//            .disposed(by: disposeBag)
-
+        middleCollectionView.uiCollectionView.rx.itemSelected
+            .subscribe(onNext: { indexPath in
+                print(indexPath.item)
+                
+                let totalCount = self.tasks.value.count - 1
+                var cellCount = totalCount - indexPath.item
+                
+                self.detailViewController.homeTitle = self.tasks.value[cellCount].title
+                self.navigationController?.pushViewController(self.detailViewController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
         
         bottomView.settingButton.button.rx.tap
             .asDriver()
             .drive { [weak self] _ in
                 //                self.middleView.tableView.deselectRow(at: indexPath, animated: true)
-                self?.navigationController?.pushViewController(self!.timelineViewController, animated: true)
+//                self?.navigationController?.pushViewController(self!.timelineViewController, animated: true)
             }
             .disposed(by: disposeBag)
         
         bottomView.plusButton.button.rx.tap
             .asDriver()
             .drive { [weak self] _ in
-                print("tap")
-                self?.backView.isHidden = false
-                self?.inputTextView.isHidden = false
-                self?.inputTextView.textInput()
+                
+                self?.addTaskViewController.modalPresentationStyle = .fullScreen
+                self?.present(self!.addTaskViewController, animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
         
@@ -112,63 +145,49 @@ class HomeViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        //下記内容はviewControllerでないと処理が走らない
-//        listViewModel.titleArray
-//            .asDriver()
-//            .drive(
-//                middleView.tableView.rx.items(cellIdentifier: "homeCell", cellType: TaskCell.self)
-//            ) { (row, model, cell) in
-//                // cellの描画処理
-////                cell.nameLabel.text = model.taskName
-//                cell.nameLabel.text = "hello"
-//            }
-//            .disposed(by: disposeBag)
-//        
-//        listViewModel.titleArray.bind(
-//            to: middleView.tableView.rx.items(
-//                cellIdentifier: "cell", cellType: UITableViewCell.self)
-//        ){ row, item, cell in
-//            cell.textLabel?.text = item.taskName
-//            
-//        }.disposed(by: disposeBag)
-        
-//        let tileCollectionViewCell = TileCollectionViewCell()
-        
-//        userListViewModel.users
-//            .asDriver()
-//            .drive(
-//                collectionTableViewCell.collectionView.rx.items(
-//                    cellIdentifier: "TileCollectionViewCell",
-//                    cellType: TileCollectionViewCell.self
-//                )
-//            ) { (row, model, cell) in
-//                cell.label.text = model.name
-//            }
-//            .disposed(by: disposeBag)
-        
         inputTextView.textField.rx.controlEvent(.editingDidEnd)
             .asDriver()
             .compactMap {[unowned self] in inputTextView.textField.text}
             .drive(onNext: { text in
                 
-                //                let collectionTableViewCellViewModel = CollectionTableViewCellViewModel()
-                //                let collectionTableViewCell = CollectionTableViewCell()
-                
-                //                print("editingDidEnd")
                 self.inputTextView.isHidden = true
                 self.backView.isHidden = true
                 
                 if text != "" {
-                    //                    collectionTableViewCellViewModel.TextAppend(element: TileCollectionViewCellViewModel(name: text))
-                    //                    self.collectionTableViewCell.TextAppend(text)
+                    
                     print(text)
                 }
                 else { return }
                 
-            
+                
             })
             .disposed(by: disposeBag)
+        
+        addTaskViewController.taskSubjectObservable
+            .subscribe { task in
+                
+                var existingTasks = self.tasks.value
+                //optional型をアンラップ
+                existingTasks.append(task.element!)
+                
+                self.tasks.accept(existingTasks)
+//                self.middleView.tableView.reloadData()
+                self.middleCollectionView.uiCollectionView.reloadData()
+                
+            }.disposed(by: disposeBag)
+        
     }
 }
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        //ここでは画面の横サイズの半分の大きさのcellサイズを指定
+        return CGSize(width: screenSize.width / 1.4 , height: screenSize.height / 1.8)
+    }
+}
+
+
 
 

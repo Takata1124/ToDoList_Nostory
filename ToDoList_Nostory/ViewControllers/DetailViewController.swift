@@ -19,6 +19,8 @@ class DetailViewController: UIViewController {
     let searchController = setSearchController()
     
     private let disposeBag = DisposeBag()
+    
+    var homeTitle: String = "detail"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +33,7 @@ class DetailViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        self.navigationItem.setTitleView(withTitle: "Detail")
+        self.navigationItem.setTitleView(withTitle: homeTitle)
         navigationItem.searchController = searchController
         navigationItem.searchController?.searchBar.setSearchTextFieldBackgroundColor(color: .rgb(red: 200, green: 200, blue: 200))
         
@@ -60,17 +62,6 @@ class DetailViewController: UIViewController {
                 print("hhhyy")
             })
             .disposed(by: disposeBag)
-        
-//        detailListViewModel.titleArray
-//            .asDriver()
-//            .drive(
-//                middleView.tableView.rx.items(cellIdentifier: "cell", cellType: DetailCell.self)
-//            ) { (row, model, cell) in
-//                // cellの描画処理
-//                print(model)
-//                cell.detailText.text = model.detailName
-//            }
-//            .disposed(by: disposeBag)
         
         bottomView.searchButton.button.rx.tap
             .asDriver()

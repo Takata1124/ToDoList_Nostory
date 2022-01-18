@@ -33,7 +33,7 @@ class CollectionTableViewCellViewModel: UIViewController {
     func TextAppend(element: TileCollectionViewCellViewModel) {
 
         self.viewModels.append(element)
-        print(self.viewModels)
+//        print(self.viewModels)
         
     }
 }

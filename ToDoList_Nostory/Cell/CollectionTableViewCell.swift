@@ -15,30 +15,6 @@ protocol CollectionTableViewCellDelegate: AnyObject {
  
 }
 
-//class Observable<T> {
-//
-//    var value: T? {
-//        didSet {
-//            listeners.forEach {
-//                $0(value)
-//            }
-//        }
-//    }
-//
-//    init(_ value: T?) {
-//        self.value = value
-//    }
-//
-//    private var listeners: [((T?) -> Void )] = []
-//
-//    func bind(_ listener: @escaping (T?) -> Void) {
-//        listener(value)
-//        self.listeners.append(listener)
-//    }
-//}
-
-
-
 struct UserTableViewCellViewModel: Codable {
     let name: String
 }
@@ -72,9 +48,6 @@ class CollectionTableViewCell: UITableViewCell {
         collectionView.delegate = self
 //        collectionView.dataSource = self
         
-//        setUpBinding()
-//
-//        TextAppend("hellohello")
     }
     
     override func layoutSubviews() {

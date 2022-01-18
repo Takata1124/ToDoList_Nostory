@@ -22,7 +22,7 @@ class TileCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "富士山")
         imageView.layer.borderColor = UIColor.black.cgColor
@@ -32,12 +32,9 @@ class TileCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(label)
-        contentView.addSubview(imageView)
-        contentView.layer.cornerRadius = 6
-        contentView.layer.borderColor = UIColor.secondaryLabel.cgColor
-        contentView.layer.borderWidth = 1.5
-        contentView.backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
+        
+        setUpLayout()
+        
     }
     
     override func layoutSubviews() {
@@ -49,6 +46,16 @@ class TileCollectionViewCell: UICollectionViewCell {
                          topPadding: 30, bottomPadding: 30, leftPadding: 30, rightPadding: 30)
     }
     
+    private func setUpLayout() {
+        
+        contentView.addSubview(label)
+        contentView.addSubview(imageView)
+        contentView.layer.cornerRadius = 6
+        contentView.layer.borderColor = UIColor.secondaryLabel.cgColor
+        contentView.layer.borderWidth = 1.5
+        contentView.backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -57,4 +64,6 @@ class TileCollectionViewCell: UICollectionViewCell {
         
         label.text = viewModel.name
     }
+    
+    
 }

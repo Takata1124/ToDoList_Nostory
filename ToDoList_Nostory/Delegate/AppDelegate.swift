@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let homeViewController = HomeViewController()
         
+        
+        
         navigationController = UINavigationController(rootViewController: homeViewController)
         
         window = UIWindow(frame: UIScreen.main.bounds)

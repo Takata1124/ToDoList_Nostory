@@ -47,7 +47,7 @@ class DetailListViewModel {
         }
         
         titleArray.accept(historyArray.reversed())
-        print(historyArray)
+//        print(historyArray)
     }
     
     func append(_ element: DetailListModel) {

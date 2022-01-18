@@ -8,6 +8,11 @@
 import UIKit
 import RxSwift
 
+struct Task {
+    let title: String
+    let fileData: NSData?
+}
+
 class InputTextView: UIView, UITextFieldDelegate {
     
     let titleLabel = TitleLabel(text: "label", textColor: .black)
@@ -44,15 +49,10 @@ class InputTextView: UIView, UITextFieldDelegate {
         textField.becomeFirstResponder()
     }
     
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         // キーボードを閉じる
         textField.resignFirstResponder()
-//        print(textField.text!)
         textField.text = ""
         return true
     }
