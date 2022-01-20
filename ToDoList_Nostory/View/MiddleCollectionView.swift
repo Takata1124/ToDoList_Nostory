@@ -48,6 +48,13 @@ class MiddleCollectionView: UIView {
         return iv
     }()
     
+    let deleteImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "trash")
+        imageView.tintColor = .red
+        return imageView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
@@ -55,10 +62,14 @@ class MiddleCollectionView: UIView {
 
         uiCollectionView.backgroundView = uiImageView
         
+        deleteImage.isHidden = true
+        
         addSubview(uiCollectionView)
+        addSubview(deleteImage)
         addSubview(countLabel)
         
         uiCollectionView.anchor(top: topAnchor, bottom: bottomAnchor, left: leftAnchor, right: rightAnchor)
+        deleteImage.anchor(centerY: centerYAnchor, centerX: centerXAnchor, width: 200, height: 200)
         countLabel.anchor(top: topAnchor, left: leftAnchor, width: 100, height: 30, topPadding: 15, leftPadding: 15)
     }
     

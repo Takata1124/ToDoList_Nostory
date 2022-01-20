@@ -9,7 +9,8 @@ import UIKit
 
 class AddTaskBottomView: UIView {
     
-    let dismissButton = BottomButtonView(width: 70, imageName: "plus")
+    let dismissButton = BottomButtonView(width: 70, imageName: "arrowshape.turn.up.left")
+    let inputButton = BottomButtonView(width: 70, imageName: "plus")
     
     init() {
         super.init(frame: .zero)
@@ -25,7 +26,7 @@ class AddTaskBottomView: UIView {
         
         backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
         
-        let baseStackView = UIStackView(arrangedSubviews: [dismissButton])
+        let baseStackView = UIStackView(arrangedSubviews: [dismissButton, inputButton])
         baseStackView.axis = .horizontal
         baseStackView.distribution = .fillEqually
         baseStackView.spacing = 10

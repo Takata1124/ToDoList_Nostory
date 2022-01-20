@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6829B60227906E29003525D3 /* DetailListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829B60127906E29003525D3 /* DetailListViewModel.swift */; };
 		6829B60427906FC7003525D3 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829B60327906FC7003525D3 /* DetailCell.swift */; };
 		6829B60727917EB0003525D3 /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829B60627917EB0003525D3 /* BottomButton.swift */; };
 		6829B609279197D1003525D3 /* BottomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6829B608279197D1003525D3 /* BottomButtonView.swift */; };
@@ -37,11 +36,11 @@
 		68F2713B2796F3B60049261C /* AddTaskBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F2713A2796F3B60049261C /* AddTaskBottomView.swift */; };
 		68F2713D2797DEC70049261C /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F2713C2797DEC70049261C /* UIViewController_Extension.swift */; };
 		68F2713F2797F3150049261C /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F2713E2797F3150049261C /* TaskViewModel.swift */; };
+		68F2714327999ED60049261C /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F2714227999ED60049261C /* ListViewController.swift */; };
 		68F6957227901C370045193D /* UISearchBar_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F6957127901C370045193D /* UISearchBar_Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6829B60127906E29003525D3 /* DetailListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailListViewModel.swift; sourceTree = "<group>"; };
 		6829B60327906FC7003525D3 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		6829B60627917EB0003525D3 /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
 		6829B608279197D1003525D3 /* BottomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButtonView.swift; sourceTree = "<group>"; };
@@ -68,6 +67,7 @@
 		68F2713A2796F3B60049261C /* AddTaskBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskBottomView.swift; sourceTree = "<group>"; };
 		68F2713C2797DEC70049261C /* UIViewController_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController_Extension.swift; sourceTree = "<group>"; };
 		68F2713E2797F3150049261C /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		68F2714227999ED60049261C /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		68F6957127901C370045193D /* UISearchBar_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISearchBar_Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,6 +149,7 @@
 			children = (
 				683B1AA12789C3480053856A /* HomeViewController.swift */,
 				68F2712F279598360049261C /* AddTaskViewController.swift */,
+				68F2714227999ED60049261C /* ListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -196,7 +197,6 @@
 		68F6956E278EDE530045193D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				6829B60127906E29003525D3 /* DetailListViewModel.swift */,
 				68F2713E2797F3150049261C /* TaskViewModel.swift */,
 			);
 			path = ViewModel;
@@ -291,7 +291,6 @@
 				683B1AA22789C3480053856A /* HomeViewController.swift in Sources */,
 				683B1AB52789D5BC0053856A /* BottomView.swift in Sources */,
 				6865AAE9278D09CE009ED8D3 /* UINavigation_Extension.swift in Sources */,
-				6829B60227906E29003525D3 /* DetailListViewModel.swift in Sources */,
 				6829B60727917EB0003525D3 /* BottomButton.swift in Sources */,
 				68F2713D2797DEC70049261C /* UIViewController_Extension.swift in Sources */,
 				68F2713F2797F3150049261C /* TaskViewModel.swift in Sources */,
@@ -302,6 +301,7 @@
 				6829B60F27921306003525D3 /* TileCollectionViewCell.swift in Sources */,
 				683B1AA02789C3480053856A /* SceneDelegate.swift in Sources */,
 				683B1ABD2789FC4B0053856A /* TitleLabel.swift in Sources */,
+				68F2714327999ED60049261C /* ListViewController.swift in Sources */,
 				68F6957227901C370045193D /* UISearchBar_Extension.swift in Sources */,
 				6829B609279197D1003525D3 /* BottomButtonView.swift in Sources */,
 				68746E04278A9EA300501CC1 /* MiddleView.swift in Sources */,

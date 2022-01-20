@@ -14,7 +14,7 @@ class BottomButton: UIButton {
             if isHighlighted {
                 UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: []) {
                     
-                    self.backgroundColor = .rgb(red: 255, green: 153, blue: 0, alpha: 1)
+                    self.backgroundColor = .yellow
                     self.transform = .init(scaleX: 0.8, y: 0.8)
                     self.layoutIfNeeded()
                 }

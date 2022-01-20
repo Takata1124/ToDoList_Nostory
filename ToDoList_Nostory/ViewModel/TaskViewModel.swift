@@ -13,6 +13,7 @@ struct Task: Codable {
     
     let title: String
     let fileData: Data
+//    let today: String
 }
 
 class TaskViewModel {
@@ -27,9 +28,18 @@ class TaskViewModel {
         var outArray: [Task] = []
     
         outArray = readItems(keyName: "taskArray")!
+        print(outArray)
 //        outArray.reverse()
         self.tasks.accept(outArray)
-        print(outArray)
+        
+        let f = DateFormatter()
+        f.dateStyle = .medium
+        f.timeStyle = .none
+        f.locale = Locale(identifier: "ja_JP")
+        let now = Date()
+        let datedate = f.string(from: now)
+        print(datedate)
+        print(type(of: datedate))
     }
     
     func saveItems(items: [Task], keyName: String) {
@@ -44,6 +54,23 @@ class TaskViewModel {
 
         let decodedItems = items.map { try! JSONDecoder().decode(Task.self, from: $0) }
         return decodedItems
+    }
+    
+    func deleteItem(indexPath: Int, editing: Bool) {
+        
+        if editing == true {
+
+            taskArray = filteredTask
+            taskArray.remove(at: indexPath)
+            taskArray.reverse()
+            filteredTask = taskArray
+            
+            print(filteredTask)
+
+        } else {
+
+            print("pass")
+        }
     }
 }
 
