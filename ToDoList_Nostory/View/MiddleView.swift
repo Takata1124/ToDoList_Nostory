@@ -10,13 +10,12 @@ import RxSwift
 import RxCocoa
 
 class MiddleView: UIView {
-    
-    
+
     let tableView: UITableView = {
         
         let table = UITableView()
         //forCellReuseIdentifierは"cell"でないとエラー
-        table.backgroundColor = .white
+//        table.backgroundColor = .white
         return table
     }()
     

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class setSearchController: UISearchController, UISearchBarDelegate {
     
@@ -14,9 +16,8 @@ class setSearchController: UISearchController, UISearchBarDelegate {
         
         searchBar.delegate = self
         searchBar.tintColor = .black
-//        searchBar.textField?.delegate = self
         
-        // Do any additional setup after loading the view.
+        
     }
     
     func textInput() {
@@ -25,10 +26,9 @@ class setSearchController: UISearchController, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // キーボードを閉じる
-//        view.endEditing(true)
+        //        view.endEditing(true)
         // 入力された値がnilでなければif文のブロック内の処理を実行
         if let word = searchBar.text {
-            // デバッグエリアに出力
             print(word)
         }
     }
@@ -37,4 +37,11 @@ class setSearchController: UISearchController, UISearchBarDelegate {
         
         searchBar.textField?.text = ""
     }
+    
+    func setupSearchBar() {
+        
+        
+    }
+    
+   
 }

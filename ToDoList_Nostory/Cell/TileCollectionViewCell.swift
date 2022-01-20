@@ -60,10 +60,7 @@ class TileCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with viewModel: TileCollectionViewCellViewModel) {
-        
-        label.text = viewModel.name
-    }
+
     
     
 }

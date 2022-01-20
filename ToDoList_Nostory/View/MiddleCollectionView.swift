@@ -9,11 +9,13 @@ import UIKit
 
 class MiddleCollectionView: UIView {
     
+    let taskViewModel = TaskViewModel()
+    lazy var viewModelCount = taskViewModel.tasks.value.count
+    
     let countLabel: UILabel = {
        let label = UILabel()
-//        label.backgroundColor = .white
-        label.text = "hello"
-        label.textColor = .white
+        
+        label.textColor = .yellow
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 25)
         return label
@@ -22,9 +24,8 @@ class MiddleCollectionView: UIView {
     let uiCollectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
-        
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 20
+        layout.minimumLineSpacing = 30
         
         let collectionView = UICollectionView (
             frame: .zero,
@@ -39,14 +40,13 @@ class MiddleCollectionView: UIView {
         super.init(frame: .zero)
         
         self.backgroundColor = .yellow
+        countLabel.text = "\(viewModelCount)展"
         
         addSubview(uiCollectionView)
         addSubview(countLabel)
         
         uiCollectionView.anchor(top: topAnchor, bottom: bottomAnchor, left: leftAnchor, right: rightAnchor)
         countLabel.anchor(top: topAnchor, left: leftAnchor, width: 100, height: 30, topPadding: 15, leftPadding: 15)
-        
-        
     }
     
     required init?(coder: NSCoder) {

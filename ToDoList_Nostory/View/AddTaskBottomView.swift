@@ -38,7 +38,6 @@ class AddTaskBottomView: UIView {
          baseStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
          baseStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
         ].forEach { $0.isActive = true }
-    }
-    
+    } 
 }
 

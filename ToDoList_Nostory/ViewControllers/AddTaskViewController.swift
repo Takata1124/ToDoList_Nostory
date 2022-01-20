@@ -23,11 +23,12 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     let addTaskBottomView = AddTaskBottomView()
     let searchController = setSearchController()
     
-    let defaults = UserDefaults.standard
+    let userDefaults = UserDefaults.standard
     var saveArray: Array! = [NSData]()
     
     var taskTitleName: String?
     var taskpngData: NSData?
+    var toData: Data?
     
     let centerView: UIView = {
         let view = UIView()
@@ -57,7 +58,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        //        imageView.image = UIImage(named: "富士山")
         return imageView
     }()
     
@@ -123,9 +123,17 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             .asDriver()
             .drive { [weak self] _ in
                 print("tapped")
-                let task = Task(title: (self?.taskTitleName!)!, fileData: self?.taskpngData)
+                
+                let task = Task(title: (self?.taskTitleName!)!, fileData: ((self?.toData)) as! Data)
+                
                 self?.taskSubject.onNext(task)
                 self?.dismiss(animated: true, completion: nil)
+                
+                //dismiss処理が遅いため、先に処理が行われる。そのため非同期処理を実施
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                    self?.textField.text = ""
+                    self?.imageView.image = nil
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -142,34 +150,12 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage? else {return}
         
         imageView.image = selectedImage
-        saveImage(uiImage: selectedImage)
+        
+        taskpngData = selectedImage.pngData()! as NSData
+        toData = Data(referencing: taskpngData!)
         
         addTaskBottomView.dismissButton.button.isEnabled = true
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    func saveImage(uiImage: UIImage) {
-        
-        // DocumentディレクトリのfileURLを取得
-        taskpngData = uiImage.pngData() as NSData?
-//        if let imageData = data {
-//            saveArray.append(imageData)
-//            defaults.set(saveArray, forKey: "saveImage")
-//            defaults.synchronize()
-//        }
-    }
-    
-    func defaultsArray() {
-        //UserDefaultsの中身が空でないことを確認
-//        if defaults.object(forKey: "saveImage") != nil {
-//            let objects = defaults.object(forKey: "saveImage") as? NSArray
-//            //配列としてUserDefaultsに保存した時の値と処理後の値が変わってしまうのでremoveAll()
-//            saveArray.removeAll()
-//            for data in objects! {
-//                saveArray.append(data as! NSData)
-//            }
-//        }
-        
     }
     
     

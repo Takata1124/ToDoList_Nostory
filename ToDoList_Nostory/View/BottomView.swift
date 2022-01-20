@@ -10,8 +10,8 @@ import UIKit
 class BottomView: UIView {
     
     let plusButton = BottomButtonView(width: 70, imageName: "plus")
-    let newButton = BottomButtonView(width: 70, title: "New")
-    var searchButton = BottomButtonView(width: 70, imageName: "magnifyingglass")
+    let newButton = BottomButtonView(width: 70, imageName: "magnifyingglass")
+    var searchButton = BottomButtonView(width: 70, imageName: "star")
     let settingButton = BottomButtonView(width: 70, imageName: "trash")
     
     init() {
@@ -43,7 +43,3 @@ class BottomView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-
-
-
