@@ -19,6 +19,7 @@ class TaskViewModel {
     
     let defaults = UserDefaults.standard
     var tasks = BehaviorRelay<[Task]>(value: [])
+    var filteredTask = [Task]()
     var taskArray: [Task] = []
     
     init() {
@@ -26,7 +27,7 @@ class TaskViewModel {
         var outArray: [Task] = []
     
         outArray = readItems(keyName: "taskArray")!
-        outArray.reverse()
+//        outArray.reverse()
         self.tasks.accept(outArray)
         print(outArray)
     }

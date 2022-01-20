@@ -21,7 +21,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     let middleView = MiddleView()
     let topView = TopView()
     let addTaskBottomView = AddTaskBottomView()
-    let searchController = setSearchController()
     
     let userDefaults = UserDefaults.standard
     var saveArray: Array! = [NSData]()
@@ -91,7 +90,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         textField.delegate = self
         
         self.navigationItem.setTitleView(withTitle: "Detail")
-        navigationItem.searchController = searchController
         navigationItem.searchController?.searchBar.setSearchTextFieldBackgroundColor(color: .rgb(red: 200, green: 200, blue: 200))
         
         let baseStackView = UIStackView(arrangedSubviews: [topView, centerView, addTaskBottomView])
@@ -124,7 +122,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             .drive { [weak self] _ in
                 print("tapped")
                 
-                let task = Task(title: (self?.taskTitleName!)!, fileData: ((self?.toData)) as! Data)
+                let task = Task(title: (self?.taskTitleName!)!, fileData: ((self?.toData)) as! Data )
                 
                 self?.taskSubject.onNext(task)
                 self?.dismiss(animated: true, completion: nil)
@@ -174,10 +172,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         } else {
             return true
         }
-        
-        //        textField.text = ""
-        
-        //
         
         return true
     }

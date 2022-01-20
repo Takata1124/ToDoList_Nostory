@@ -17,7 +17,7 @@ extension UINavigationItem {
         let titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.font = .boldSystemFont(ofSize: 20)
-        titleLabel.textColor = .white
+        titleLabel.textColor = .yellow
 
         let subTitleLabel = UILabel()
         subTitleLabel.text = subTitile

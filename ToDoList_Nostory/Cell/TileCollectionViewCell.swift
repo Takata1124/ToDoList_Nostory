@@ -34,16 +34,16 @@ class TileCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         setUpLayout()
-        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        label.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor, centerX: centerXAnchor,
-                     height: 40, topPadding: 30, leftPadding: 30, rightPadding: 30)
-        imageView.anchor(top: label.bottomAnchor, bottom: contentView.bottomAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor, centerX: centerXAnchor,
-                         topPadding: 30, bottomPadding: 30, leftPadding: 30, rightPadding: 30)
+        
+        imageView.anchor(top:  contentView.topAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor, height: 370,
+                         topPadding: 30, leftPadding: 30, rightPadding: 30)
+        label.anchor(bottom: contentView.bottomAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor,
+                     height: 40, bottomPadding: 30, leftPadding: 30, rightPadding: 30)
     }
     
     private func setUpLayout() {
@@ -51,9 +51,9 @@ class TileCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(label)
         contentView.addSubview(imageView)
         contentView.layer.cornerRadius = 6
-        contentView.layer.borderColor = UIColor.secondaryLabel.cgColor
-        contentView.layer.borderWidth = 1.5
-        contentView.backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
+//        contentView.layer.borderColor = UIColor.secondaryLabel.cgColor
+//        contentView.layer.borderWidth = 1.5
+//        contentView.backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 1)
     }
     
     required init?(coder: NSCoder) {
