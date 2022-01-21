@@ -10,14 +10,14 @@ import UIKit
 class MiddleCollectionView: UIView {
     
     let taskViewModel = TaskViewModel()
-    //lazy var 出ないとエラー
+    //lazy var でないとエラー
     lazy var viewModelCount = taskViewModel.filteredTask.count {
         didSet {
             countLabel.text = "\(viewModelCount)展"
         }
     }
     
-    let countLabel: UILabel = {
+    var countLabel: UILabel = {
        let label = UILabel()
         label.textColor = .yellow
         label.textAlignment = .center
@@ -29,7 +29,7 @@ class MiddleCollectionView: UIView {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = 0
         
         let collectionView = UICollectionView (
             frame: .zero,
@@ -59,7 +59,6 @@ class MiddleCollectionView: UIView {
         super.init(frame: .zero)
         
         self.backgroundColor = .yellow
-
         uiCollectionView.backgroundView = uiImageView
         
         deleteImage.isHidden = true

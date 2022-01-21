@@ -15,6 +15,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         //ここでは画面の横サイズの半分の大きさのcellサイズを指定
-        return CGSize(width: screenSize.width / 1.2 , height: screenSize.height / 1.8)
+        return CGSize(width: screenSize.width / 1.7 , height: screenSize.height / 1.7)
     }
 }

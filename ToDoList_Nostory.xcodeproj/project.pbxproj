@@ -28,6 +28,7 @@
 		68746E07278AABCD00501CC1 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 68746E06278AABCD00501CC1 /* RxCocoa */; };
 		68746E09278AABCD00501CC1 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 68746E08278AABCD00501CC1 /* RxSwift */; };
 		68746E0B278B10CE00501CC1 /* UIColor_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68746E0A278B10CE00501CC1 /* UIColor_Extension.swift */; };
+		68771A11279AB75800B88B14 /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68771A10279AB75800B88B14 /* AddTaskViewModel.swift */; };
 		68F2712627942C2E0049261C /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 68F2712527942C2E0049261C /* RxDataSources */; };
 		68F27130279598360049261C /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F2712F279598360049261C /* AddTaskViewController.swift */; };
 		68F271322795DF6F0049261C /* MiddleCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F271312795DF6F0049261C /* MiddleCollectionView.swift */; };
@@ -37,6 +38,7 @@
 		68F2713D2797DEC70049261C /* UIViewController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F2713C2797DEC70049261C /* UIViewController_Extension.swift */; };
 		68F2713F2797F3150049261C /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F2713E2797F3150049261C /* TaskViewModel.swift */; };
 		68F2714327999ED60049261C /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F2714227999ED60049261C /* ListViewController.swift */; };
+		68F27146279A9E120049261C /* PKHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 68F27145279A9E120049261C /* PKHUD */; };
 		68F6957227901C370045193D /* UISearchBar_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F6957127901C370045193D /* UISearchBar_Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +64,7 @@
 		6865AAE8278D09CE009ED8D3 /* UINavigation_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigation_Extension.swift; sourceTree = "<group>"; };
 		68746E03278A9EA300501CC1 /* MiddleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleView.swift; sourceTree = "<group>"; };
 		68746E0A278B10CE00501CC1 /* UIColor_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_Extension.swift; sourceTree = "<group>"; };
+		68771A10279AB75800B88B14 /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
 		68F2712F279598360049261C /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
 		68F271312795DF6F0049261C /* MiddleCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleCollectionView.swift; sourceTree = "<group>"; };
 		68F2713A2796F3B60049261C /* AddTaskBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskBottomView.swift; sourceTree = "<group>"; };
@@ -82,6 +85,7 @@
 				68746E09278AABCD00501CC1 /* RxSwift in Frameworks */,
 				68746E07278AABCD00501CC1 /* RxCocoa in Frameworks */,
 				68F271352796954F0049261C /* Realm in Frameworks */,
+				68F27146279A9E120049261C /* PKHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				68F2713E2797F3150049261C /* TaskViewModel.swift */,
+				68771A10279AB75800B88B14 /* AddTaskViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 				68F2712527942C2E0049261C /* RxDataSources */,
 				68F271342796954F0049261C /* Realm */,
 				68F271362796954F0049261C /* RealmSwift */,
+				68F27145279A9E120049261C /* PKHUD */,
 			);
 			productName = ToDoList_Nostory;
 			productReference = 683B1A9A2789C3480053856A /* ToDoList_Nostory.app */;
@@ -259,6 +265,7 @@
 				6865AAE2278C6E9B009ED8D3 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				68F2712427942C2E0049261C /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				68F271332796954F0049261C /* XCRemoteSwiftPackageReference "realm-swift" */,
+				68F27144279A9E120049261C /* XCRemoteSwiftPackageReference "PKHUD" */,
 			);
 			productRefGroup = 683B1A9B2789C3480053856A /* Products */;
 			projectDirPath = "";
@@ -287,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				68F271322795DF6F0049261C /* MiddleCollectionView.swift in Sources */,
+				68771A11279AB75800B88B14 /* AddTaskViewModel.swift in Sources */,
 				68F2713B2796F3B60049261C /* AddTaskBottomView.swift in Sources */,
 				683B1AA22789C3480053856A /* HomeViewController.swift in Sources */,
 				683B1AB52789D5BC0053856A /* BottomView.swift in Sources */,
@@ -552,6 +560,14 @@
 				version = 5.0.0;
 			};
 		};
+		68F27144279A9E120049261C /* XCRemoteSwiftPackageReference "PKHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pkluz/PKHUD";
+			requirement = {
+				kind = exactVersion;
+				version = 5.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -584,6 +600,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 68F271332796954F0049261C /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		68F27145279A9E120049261C /* PKHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 68F27144279A9E120049261C /* XCRemoteSwiftPackageReference "PKHUD" */;
+			productName = PKHUD;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

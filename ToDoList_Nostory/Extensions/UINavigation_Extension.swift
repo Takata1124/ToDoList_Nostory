@@ -8,14 +8,10 @@
 import UIKit
 
 extension UINavigationItem {
-    
-    
-    
+
     func setTitleView(withTitle title: String, subTitile: String = "", action: Selector = "") {
         
         //        var addBtn: UIBarButtonItem!
-       
-        
         let titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.font = .boldSystemFont(ofSize: 20)
@@ -35,6 +31,4 @@ extension UINavigationItem {
         //        self.leftBarButtonItem = addBtn
         
     }
-    
-   
 }

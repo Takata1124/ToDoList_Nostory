@@ -18,9 +18,10 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     }
     
     let bottomView = BottomView()
-    let middleView = MiddleView()
     let topView = TopView()
     let addTaskBottomView = AddTaskBottomView()
+    
+    let addTaskViewModel = AddTaskViewModel()
     
     let userDefaults = UserDefaults.standard
     var saveArray: Array! = [NSData]()
@@ -43,6 +44,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         textField.layer.borderColor = UIColor.black.cgColor
         textField.layer.borderWidth = 1.0
         textField.font = UIFont.systemFont(ofSize: 17)
+        textField.placeholder = "10文字まで"
         return textField
     }()
     
@@ -57,7 +59,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     
     var AddimageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.image = UIImage(named: "富士山")
         return imageView
     }()
     
@@ -72,6 +73,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     
     private func setupLayout() {
         
+        //ロード時に追加ボタンをfalse
         addTaskBottomView.inputButton.button.isEnabled = false
         
         centerView.addSubview(textField)
@@ -79,10 +81,10 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         uiButton.addSubview(AddimageView)
         
         textField.anchor(
-            top: centerView.topAnchor, centerX: centerView.centerXAnchor, width: 300, height: 50, topPadding: 50
+            top: centerView.topAnchor, centerX: centerView.centerXAnchor, width: screenSize.width / 2, height: 50, topPadding: 20
         )
         uiButton.anchor(
-            top: textField.bottomAnchor, centerX: centerView.centerXAnchor, width: 300, height: 400, topPadding: 50
+            top: textField.bottomAnchor, centerX: centerView.centerXAnchor, width: screenSize.width / 2, height: screenSize.height / 2, topPadding: 20
         )
         AddimageView.anchor(
             top: uiButton.topAnchor, bottom: uiButton.bottomAnchor, left: uiButton.leftAnchor, right: uiButton.rightAnchor
@@ -92,6 +94,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         
         self.navigationItem.setTitleView(withTitle: "Add a picture")
         navigationItem.searchController?.searchBar.setSearchTextFieldBackgroundColor(color: .rgb(red: 200, green: 200, blue: 200))
+        self.navigationController?.navigationBar.tintColor = .yellow
         
         let baseStackView = UIStackView(arrangedSubviews: [topView, centerView, addTaskBottomView])
         baseStackView.axis = .vertical
@@ -100,7 +103,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         self.view.addSubview(baseStackView)
         
         [topView.heightAnchor.constraint(equalToConstant: 150),
-         addTaskBottomView.heightAnchor.constraint(equalToConstant: 150),
+         addTaskBottomView.heightAnchor.constraint(equalToConstant: 125),
          baseStackView.topAnchor.constraint(equalTo: view.topAnchor),
          baseStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
          baseStackView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -114,14 +117,11 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         
         if textField.text != "" {
             taskTitleName = textField.text!
-            
         } else {
             return true
         }
-        
         return true
     }
-    
     
     func openImagePicker() {
         
@@ -130,31 +130,50 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         controller.sourceType = .photoLibrary
         present(controller, animated: true, completion: nil)
     }
-    
-    //delegate直下に置かないとNG
+
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage? else {return}
         
         AddimageView.image = selectedImage
-        print(selectedImage)
-        
         taskpngData = selectedImage.pngData()! as NSData
         toData = Data(referencing: taskpngData!)
         
-        addTaskBottomView.inputButton.button.isEnabled = true
         self.dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
         dismiss(animated: true, completion: nil)
+    }
+    
+    func makindDate() -> String{
+        
+        let f = DateFormatter()
+        f.dateStyle = .medium
+        f.timeStyle = .none
+        f.locale = Locale(identifier: "ja_JP")
+        let now = Date()
+        let datedate = f.string(from: now)
+        return datedate
     }
     
     private func setupBinding() {
         
+        textField.rx.text
+            .map { text in
+                if let text = text, text.count > 10 {
+                    return String(text.prefix(10))
+                } else {
+                    return text ?? ""
+                }
+            }
+            .bind(to: textField.rx.text)
+            .disposed(by: disposeBag)
+        
         addTaskBottomView.dismissButton.button.rx.tap
             .asDriver()
             .drive { [weak self] _ in
-                print("tapped")
                 self?.navigationController?.popViewController(animated: true)
                 
             }.disposed(by: disposeBag)
@@ -163,12 +182,12 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             .asDriver()
             .drive { [weak self] _ in
                 
-                let task = Task(title: (self?.taskTitleName!)!, fileData: ((self?.toData)) as! Data )
-                
+                let todayTime: String = (self?.makindDate())!
+                let task = Task(
+                    title: (self?.taskTitleName!)!, fileData: ((self?.toData)) as! Data, today: todayTime, tapbutton: false)
                 self?.taskSubject.onNext(task)
-                
                 self?.navigationController?.popViewController(animated: true)
-                //dismiss処理が遅いため、先に処理が行われる。そのため非同期処理を実施
+
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                     self?.textField.text = ""
                     self?.AddimageView.image = nil
@@ -179,7 +198,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         uiButton.rx.tap
             .asDriver()
             .drive { [weak self] _ in
-                print("tapped")
+                
                 self?.openImagePicker()
             }
             .disposed(by: disposeBag)

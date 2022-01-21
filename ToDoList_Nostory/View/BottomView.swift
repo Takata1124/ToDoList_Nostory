@@ -12,7 +12,7 @@ class BottomView: UIView {
     let plusButton = BottomButtonView(width: 70, imageName: "plus")
     let searchButton = BottomButtonView(width: 70, imageName: "magnifyingglass")
     var starButton = BottomButtonView(width: 70, imageName: "star")
-    let settingButton = BottomButtonView(width: 70, imageName: "list.bullet")
+    let settingButton = BottomButtonView(width: 70, imageName: "trash")
     
     init() {
         super.init(frame: .zero)
