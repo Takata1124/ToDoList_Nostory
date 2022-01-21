@@ -9,6 +9,12 @@ import UIKit
 
 class BottomButtonView: UIView {
     
+//    var buttonColor: UIColor? {
+//        didSet {
+//            button.backgroundColor = buttonColor
+//        }
+//    }
+    
     var button: UIButton = {
         let button = BottomButton(type: .custom)
         button.setTitleColor(UIColor.black, for: .normal)

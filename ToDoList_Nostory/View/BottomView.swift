@@ -12,7 +12,7 @@ class BottomView: UIView {
     let plusButton = BottomButtonView(width: 70, imageName: "plus")
     let searchButton = BottomButtonView(width: 70, imageName: "magnifyingglass")
     var starButton = BottomButtonView(width: 70, imageName: "star")
-    let settingButton = BottomButtonView(width: 70, imageName: "trash")
+    let deleteButton = BottomButtonView(width: 70, imageName: "trash")
     
     init() {
         super.init(frame: .zero)
@@ -24,7 +24,7 @@ class BottomView: UIView {
         
         backgroundColor = .rgb(red: 51, green: 51, blue: 102, alpha: 0.8)
         
-        let baseStackView = UIStackView(arrangedSubviews: [plusButton, starButton, searchButton, settingButton])
+        let baseStackView = UIStackView(arrangedSubviews: [plusButton, starButton, searchButton, deleteButton])
         baseStackView.axis = .horizontal
         baseStackView.distribution = .fillEqually
         baseStackView.spacing = 10

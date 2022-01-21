@@ -13,9 +13,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     
     private let taskSubject = PublishSubject<Task>()
     
-    var taskSubjectObservable: Observable<Task> {
-        return taskSubject.asObserver()
-    }
+    var taskSubjectObservable: Observable<Task> { return taskSubject.asObserver() }
     
     let bottomView = BottomView()
     let topView = TopView()
@@ -25,7 +23,6 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     
     let userDefaults = UserDefaults.standard
     var saveArray: Array! = [NSData]()
-    
     var taskTitleName: String?
     var taskpngData: NSData?
     var toData: Data?
@@ -44,7 +41,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         textField.layer.borderColor = UIColor.black.cgColor
         textField.layer.borderWidth = 1.0
         textField.font = UIFont.systemFont(ofSize: 17)
-        textField.placeholder = "10文字まで"
+        textField.placeholder = "15文字まで"
         return textField
     }()
     
@@ -80,11 +77,13 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         centerView.addSubview(uiButton)
         uiButton.addSubview(AddimageView)
         
+        let textFieldHeight = screenSize.height / 2
+        
         textField.anchor(
-            top: centerView.topAnchor, centerX: centerView.centerXAnchor, width: screenSize.width / 2, height: 50, topPadding: 20
+            top: centerView.topAnchor, centerX: centerView.centerXAnchor, width: textFieldHeight / 4 * 3, height: 50, topPadding: 20
         )
         uiButton.anchor(
-            top: textField.bottomAnchor, centerX: centerView.centerXAnchor, width: screenSize.width / 2, height: screenSize.height / 2, topPadding: 20
+            top: textField.bottomAnchor, centerX: centerView.centerXAnchor, width: textFieldHeight / 4 * 3, height: textFieldHeight, topPadding: 20
         )
         AddimageView.anchor(
             top: uiButton.topAnchor, bottom: uiButton.bottomAnchor, left: uiButton.leftAnchor, right: uiButton.rightAnchor
@@ -115,11 +114,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         // キーボードを閉じる
         textField.resignFirstResponder()
         
-        if textField.text != "" {
-            taskTitleName = textField.text!
-        } else {
-            return true
-        }
+        if textField.text != "" { taskTitleName = textField.text! } else { return true }
+        
         return true
     }
     
@@ -139,6 +135,8 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         taskpngData = selectedImage.pngData()! as NSData
         toData = Data(referencing: taskpngData!)
         
+        addTaskViewModel.pictureOutput.onNext(true)
+        
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -147,6 +145,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         dismiss(animated: true, completion: nil)
     }
     
+    //今日の日付を取得
     func makindDate() -> String{
         
         let f = DateFormatter()
@@ -161,9 +160,16 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     private func setupBinding() {
         
         textField.rx.text
+            .asDriver()
+            .drive { text in
+                self.addTaskViewModel.titleTextInput.onNext(text ?? "")
+            }
+            .disposed(by: disposeBag)
+        
+        textField.rx.text
             .map { text in
-                if let text = text, text.count > 10 {
-                    return String(text.prefix(10))
+                if let text = text, text.count > 15 {
+                    return String(text.prefix(15))
                 } else {
                     return text ?? ""
                 }
@@ -188,7 +194,7 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
                 self?.taskSubject.onNext(task)
                 self?.navigationController?.popViewController(animated: true)
 
-                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self?.textField.text = ""
                     self?.AddimageView.image = nil
                 }
@@ -200,6 +206,13 @@ class AddTaskViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             .drive { [weak self] _ in
                 
                 self?.openImagePicker()
+            }
+            .disposed(by: disposeBag)
+        
+        addTaskViewModel.validRegisterDriver
+            .drive { validAll in
+                
+                self.addTaskBottomView.inputButton.button.isEnabled = validAll
             }
             .disposed(by: disposeBag)
     }

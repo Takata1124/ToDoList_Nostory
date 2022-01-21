@@ -11,24 +11,16 @@ extension UINavigationItem {
 
     func setTitleView(withTitle title: String, subTitile: String = "", action: Selector = "") {
         
-        //        var addBtn: UIBarButtonItem!
         let titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.font = .boldSystemFont(ofSize: 20)
         titleLabel.textColor = .yellow
         
-        let subTitleLabel = UILabel()
-        subTitleLabel.text = subTitile
-        subTitleLabel.font = .systemFont(ofSize: 14)
-        subTitleLabel.textColor = .gray
-        
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
+        let stackView = UIStackView(arrangedSubviews: [titleLabel])
         stackView.distribution = .equalCentering
         stackView.alignment = .center
         stackView.axis = .vertical
 
         self.titleView = stackView
-        //        self.leftBarButtonItem = addBtn
-        
     }
 }

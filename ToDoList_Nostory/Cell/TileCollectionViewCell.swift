@@ -13,28 +13,41 @@ class TileCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "TileCollectionViewCell"
     
+    var labelBool: Bool? {
+        
+        didSet {
+            if labelBool == true {
+                label.backgroundColor = .yellow
+            } else {
+                label.backgroundColor = .white
+            }
+        }
+    }
+    
     let label: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 17, weight: .medium)
         label.backgroundColor = .white
-//        label.layer.borderWidth = 1.0
-//        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.borderWidth = 1.0
+        label.layer.borderColor = UIColor.black.cgColor
+//        label.layer.cornerRadius = 10
         return label
     }()
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "富士山")
-//        imageView.layer.borderColor = UIColor.black.cgColor
-//        imageView.layer.borderWidth = 1.0
+        imageView.layer.borderWidth = 1.0
+        imageView.layer.borderColor = UIColor.black.cgColor
+//        imageView.layer.cornerRadius = 10
         return imageView
     }()
     
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .white
+        label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     
@@ -47,16 +60,19 @@ class TileCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let screenWidth = screenSize.width / 2
-        let screeHeight = screenSize.height / 2
+        let screenWidth = screenSize.width / 1.3
+//        let screeHeight = screenSize.height / 2
         
         contentView.addSubview(imageView)
         contentView.addSubview(label)
+        contentView.addSubview(dateLabel)
         
         imageView.anchor(top:  contentView.topAnchor, centerX: contentView.centerXAnchor,
-                         width: screenWidth, height: screeHeight, topPadding: 20)
+                         width: screenWidth , height: screenWidth / 3 * 4, topPadding: 20)
         label.anchor(top: imageView.bottomAnchor, centerX: contentView.centerXAnchor,
                      width: screenWidth, height: 40, topPadding: 20)
+        dateLabel.anchor(top: contentView.topAnchor, left: contentView.leftAnchor,
+                         width: 100, height: 40, topPadding: 30, leftPadding: 40)
     }
     
     private func setUpLayout() {
@@ -64,9 +80,6 @@ class TileCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(label)
         contentView.addSubview(imageView)
         contentView.layer.cornerRadius = 6
-//        contentView.layer.borderColor = UIColor.secondaryLabel.cgColor
-//        contentView.layer.borderWidth = 1.5
-//        contentView.backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {

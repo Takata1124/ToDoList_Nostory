@@ -14,16 +14,14 @@ class AddTaskViewModel {
     private let disposeBag = DisposeBag()
     
     var titleTextOutput = PublishSubject<String>()
-    var pictureOutput = PublishSubject<Data>()
     var validRegisterSubject = BehaviorSubject<Bool>(value: false)
     
     var titleTextInput: AnyObserver<String> {
         titleTextOutput.asObserver()
     }
     
-    var picureSetup: AnyObserver<Data> {
-        pictureOutput.asObserver()
-    }
+    var pictureOutput = BehaviorSubject(value: false)
+    var pictureInput: Observable<Bool> { return pictureOutput }
     
     var validRegisterDriver: Driver<Bool> = Driver.never()
     
@@ -38,16 +36,12 @@ class AddTaskViewModel {
                 return text.count >= 1
             }
         
-        let pictureValid = pictureOutput
-            .asObserver()
-            .map { data -> Bool in
-                return data != nil
-            }
+        let pictureValid = pictureInput
         
-        Observable.combineLatest(titleValid, pictureValid) { $0 && $1 }
-            .subscribe { validAll in
-                self.validRegisterSubject.onNext(validAll)
-            }.disposed(by: disposeBag)
+        Observable.combineLatest(titleValid, pictureValid){ $0 && $1 }
+        .subscribe { validAll in
+            self.validRegisterSubject.onNext(validAll)
+        }.disposed(by: disposeBag)
     }
     
 }

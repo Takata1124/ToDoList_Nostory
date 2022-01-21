@@ -1,9 +1,4 @@
-//
-//  TaskViewModel.swift
-//  ToDoList_Nostory
-//
-//  Created by t032fj on 2022/01/19.
-//
+
 
 import UIKit
 import RxSwift
@@ -26,12 +21,13 @@ class TaskViewModel {
     
     init() {
         
+//        //userDefaultsの初期化
+//        defaults.removeObject(forKey: "taskArray")
+        
         var outArray: [Task] = []
         
         outArray = readItems(keyName: "taskArray")!
-        print(outArray)
         self.tasks.accept(outArray)
-        
     }
     
     func saveItems(items: [Task], keyName: String) {
@@ -53,7 +49,6 @@ class TaskViewModel {
         taskArray.remove(at: indexPath)
         taskArray.reverse()
         filteredTask = taskArray
-        print(filteredTask)
     }
 }
 
